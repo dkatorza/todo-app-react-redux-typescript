@@ -1,1 +1,1 @@
-# Todo app with React +Readux + Typescript
+# Todo app with React +Redux + Typescript
