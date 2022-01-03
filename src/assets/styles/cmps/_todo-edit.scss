@@ -1,0 +1,35 @@
+.edit-todo-wrapper {
+    background-color: rgb(255, 255, 255);
+    width: 457px;
+    min-width: 449px;
+    min-height: 65px;
+    max-height: 65px;
+    position: absolute;
+    z-index: 99;
+    display: flex;
+
+    @include for-mobile-layout {
+        margin-left: 5.9rem;
+        min-width: 245px;
+        max-width: 359px;
+  
+    }
+
+    .edit-todo-input {
+        width: 100%;
+        min-width: 258px;
+        background-color: $clr8;
+
+        @include for-mobile-layout {
+            max-width: 244px;
+            min-width: 244px;
+            margin-left: 8px !important;
+        }
+
+        & >input {
+            @include for-mobile-layout {
+                min-width: 80px;
+            }
+        }
+    }
+}
