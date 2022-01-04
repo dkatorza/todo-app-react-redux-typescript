@@ -1,14 +1,21 @@
-const INITIAL_STATE = {
+import { AppActionType, AppTypes } from '../actions/appActionsTypes';
+
+interface Istate {
+  popover: boolean;
+  editPos?: DOMRect;
+}
+
+const INITIAL_STATE: Istate = {
   popover: false,
-  editPos:''
+  editPos: undefined,
+};
+export function appReducer(state = INITIAL_STATE, action: AppActionType) {
+  switch (action.type) {
+    case AppTypes.SET_POPOVER:
+      return { ...state, popover: action.popover };
+    case AppTypes.SET_EDITPOS:
+      return { ...state, editPos: action.editPos };
+    default:
+      return state;
   }
-  export function appReducer(state = INITIAL_STATE, action) {
-    switch (action.type) {
-      case 'SET_POPOVER':
-        return {...state, popover: action.popover }
-      case 'SET_EDITPOS':
-        return {...state, editPos: action.editPos }
-      default:
-        return state
-    }
-  }
+}

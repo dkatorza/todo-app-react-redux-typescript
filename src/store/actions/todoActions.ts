@@ -1,14 +1,13 @@
 import { todoService } from '../../services/todo.service';
-import { TodoActionsType } from './todoActionsTypes';
+import { TodoActionsType, ActionType } from './todoActionsTypes';
 import { Dispatch } from 'redux';
-import { Itodo } from '../types/Itodo';
 
 export function getTodos(filterBy: string | undefined) {
   return async (dispatch: Dispatch<TodoActionsType>) => {
     try {
       const todos = await todoService.query(filterBy);
       dispatch({
-        type: 'SET_TODOS',
+        type: ActionType.SET_TODOS,
         todos,
       });
     } catch (err) {
@@ -22,7 +21,7 @@ export function onRemoveTodo(todoId: string) {
     try {
       await todoService.remove(todoId);
       dispatch({
-        type: 'REMOVE_TODO',
+        type: ActionType.REMOVE_TODO,
         todoId,
       });
     } catch (err) {
@@ -36,7 +35,7 @@ export function onAddTodo(todo: { text: string }) {
     try {
       const savedTodo = await todoService.save(todo);
       dispatch({
-        type: 'ADD_TODO',
+        type: ActionType.ADD_TODO,
         todo: savedTodo,
       });
     } catch (err) {
@@ -50,7 +49,7 @@ export function onEditTodo(currTodo: {}) {
     try {
       const updatedTodo = await todoService.save(currTodo);
       dispatch({
-        type: 'UPDATE_TODO',
+        type: ActionType.UPDATE_TODO,
         todo: updatedTodo,
       });
     } catch (err) {

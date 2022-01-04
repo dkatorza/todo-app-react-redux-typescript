@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, MouseEvent, SetStateAction } from 'react'
+import { useState, useEffect, useRef} from 'react'
 import { TodoAdd } from './cmps/TodoAdd'
 import { TodoEdit } from './cmps/TodoEdit'
 import { TodoFilter } from './cmps/TodoFilter'
@@ -9,13 +9,16 @@ import { getTodos, onRemoveTodo, onEditTodo } from './store/actions/todoActions'
 import { onSetPopover, onSetEditPos } from './store/actions/appActions'
 import { useAppDispatch, useAppSelector } from './hooks/redux-ts-hooks';
 import { Itodo } from './store/types/Itodo';
+import { bindActionCreators } from 'redux';
+import { useDispatch } from 'react-redux';
+
 
 
 function App() {
 
   const { todos } = useAppSelector(state => state.todoModule)
   const { popover } = useAppSelector(state => state.appModule)
-  const dispatch = useAppDispatch()
+  const dispatch  = useDispatch()
 
   const [currTodo, setCurrTodo] =  useState<Itodo | null>(null)
   const [editTodoMargin, setEditTodoMargin] = useState(0)

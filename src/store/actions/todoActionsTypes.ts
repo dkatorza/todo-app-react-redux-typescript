@@ -1,29 +1,26 @@
 import { Itodo } from '../types/Itodo';
 
-export const SET_TODOS = 'SET_TODOS';
-export const REMOVE_TODO = 'REMOVE_TODO';
-export const ADD_TODO = 'ADD_TODO';
-export const UPDATE_TODO = 'UPDATE_TODO';
-
-interface TodoActions {
-  todos?: Itodo[];
-  todo?: Itodo;
+export enum ActionType {
+  SET_TODOS = 'SET_TODOS',
+  REMOVE_TODO = 'REMOVE_TODO',
+  ADD_TODO = 'ADD_TODO',
+  UPDATE_TODO = 'UPDATE_TODO',
 }
 
-interface SetTodos extends TodoActions {
-  type: typeof SET_TODOS;
+interface SetTodos {
+  type: ActionType.SET_TODOS;
   todos: Itodo[];
 }
-interface RemoveTodo extends TodoActions {
-  type: typeof REMOVE_TODO;
+interface RemoveTodo {
+  type: ActionType.REMOVE_TODO;
   todoId: string;
 }
-interface AddTodo extends TodoActions {
-  type: typeof ADD_TODO;
+interface AddTodo {
+  type: ActionType.ADD_TODO;
   todo: Itodo;
 }
-interface UpdateTodo extends TodoActions {
-  type: typeof UPDATE_TODO;
+interface UpdateTodo {
+  type: ActionType.UPDATE_TODO;
   todo: Itodo;
 }
 
