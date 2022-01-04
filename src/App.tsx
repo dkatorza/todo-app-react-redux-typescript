@@ -1,5 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useState, useEffect, useRef, MouseEvent, SetStateAction } from 'react'
 import { TodoAdd } from './cmps/TodoAdd'
 import { TodoEdit } from './cmps/TodoEdit'
 import { TodoFilter } from './cmps/TodoFilter'
@@ -8,42 +7,44 @@ import { ReactComponent as Trashcan } from './assets/img/iconmonstr-trash-can-2.
 import { Footer } from './cmps/Footer'
 import { getTodos, onRemoveTodo, onEditTodo } from './store/actions/todoActions'
 import { onSetPopover, onSetEditPos } from './store/actions/appActions'
+import { useAppDispatch, useAppSelector } from './hooks/redux-ts-hooks';
+import { Itodo } from './store/types/Itodo';
 
 
 function App() {
 
-  const { todos } = useSelector(state => state.todoModule)
-  const { popover } = useSelector(state => state.appModule)
-  const dispatch = useDispatch()
+  const { todos } = useAppSelector(state => state.todoModule)
+  const { popover } = useAppSelector(state => state.appModule)
+  const dispatch = useAppDispatch()
 
-  const [currTodo, setCurrTodo] = useState('')
+  const [currTodo, setCurrTodo] =  useState<Itodo | null>(null)
   const [editTodoMargin, setEditTodoMargin] = useState(0)
-  const todoEl = useRef(null);
+  const todoEl = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    dispatch(getTodos())
+    dispatch(getTodos(''))
   }, [])
 
-  const onChangeFilter = async (filterBy) => {
+  const onChangeFilter = async (filterBy: undefined) => {
     await getTodos(filterBy)
   };
 
-  const completeTodo = async (ev, todo) => {
+  const completeTodo = async (ev: React.MouseEvent<Element, globalThis.MouseEvent>, todo:Itodo) => {
     ev.stopPropagation()
-    todo.complete = !todo.complete
+    todo.completed = !todo.completed
     dispatch(onEditTodo(todo))
   }
 
-  const removeTodo = async (ev, id) => {
+  const removeTodo = async (ev: React.MouseEvent<Element, globalThis.MouseEvent>, id: string) => {
     ev.stopPropagation()
     dispatch(onRemoveTodo(id))
     setEditTodoMargin(0)
   }
 
-  const popoverEdit = async (ev, todo) => {
+  const popoverEdit = async (ev: React.MouseEvent<Element, globalThis.MouseEvent>, todo:Itodo) => {
     ev.stopPropagation()
     setCurrTodo(todo)
-    const elPos = await ev.target.getBoundingClientRect()
+    const elPos = await ev.currentTarget.getBoundingClientRect()
     checkScrollHeight()
     dispatch(onSetEditPos(elPos))
     dispatch(onSetPopover(!popover))
@@ -51,7 +52,7 @@ function App() {
 
 
   const checkScrollHeight = () => {
-    if (todoEl.current.scrollHeight > 650) {
+    if (todoEl.current && todoEl.current.scrollHeight > 650) {
       setEditTodoMargin(8)
     }
   }
@@ -67,9 +68,9 @@ function App() {
         <TodoAdd />
       </div>
       <div className="todos scroller" ref={todoEl} >
-        {todos.map(todo => (
+        {todos.map((todo) => (
           <div
-            className={'todo   ' + (todo.complete ? 'completed' : '')}
+            className={'todo   ' + (todo.completed ? 'completed' : '')}
             key={todo._id}
             onClick={(ev) => completeTodo(ev, todo)}
 
