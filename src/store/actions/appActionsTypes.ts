@@ -5,11 +5,11 @@ export enum AppTypes {
 
 interface SetPopover {
   type: AppTypes.SET_POPOVER;
-  popover?: boolean;
+  popover: boolean;
 }
 interface SetEditPos {
   type: AppTypes.SET_EDITPOS;
-  editPos?: DOMRect;
+  editPos: DOMRect;
 }
 
 export type AppActionType = SetPopover | SetEditPos;

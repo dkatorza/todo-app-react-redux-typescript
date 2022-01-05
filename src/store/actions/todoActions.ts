@@ -1,9 +1,12 @@
 import { todoService } from '../../services/todo.service';
 import { TodoActionsType, ActionType } from './todoActionsTypes';
 import { Dispatch } from 'redux';
+import { Itodo } from '../types/Itodo';
 
-export function getTodos(filterBy: string | undefined) {
+export function getTodos(filterBy: { title: string; criteria: string }) {
   return async (dispatch: Dispatch<TodoActionsType>) => {
+    console.log('ff', filterBy);
+
     try {
       const todos = await todoService.query(filterBy);
       dispatch({
@@ -44,7 +47,7 @@ export function onAddTodo(todo: { text: string }) {
   };
 }
 
-export function onEditTodo(currTodo: {}) {
+export function onEditTodo(currTodo: Itodo) {
   return async (dispatch: Dispatch<TodoActionsType>) => {
     try {
       const updatedTodo = await todoService.save(currTodo);

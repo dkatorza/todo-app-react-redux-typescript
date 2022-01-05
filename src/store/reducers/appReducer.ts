@@ -2,12 +2,12 @@ import { AppActionType, AppTypes } from '../actions/appActionsTypes';
 
 interface Istate {
   popover: boolean;
-  editPos?: DOMRect;
+  editPos: DOMRect;
 }
 
 const INITIAL_STATE: Istate = {
   popover: false,
-  editPos: undefined,
+  editPos: new DOMRect(),
 };
 export function appReducer(state = INITIAL_STATE, action: AppActionType) {
   switch (action.type) {

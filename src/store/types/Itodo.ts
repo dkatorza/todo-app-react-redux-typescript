@@ -1,6 +1,6 @@
 export interface Itodo {
   _id: string;
   text: string;
-  completed: boolean;
+  complete: boolean;
   timestamp: string;
 }
